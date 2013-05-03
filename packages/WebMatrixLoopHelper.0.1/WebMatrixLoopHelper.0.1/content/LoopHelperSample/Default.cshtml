@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>Loop Helper samples</title>
+<style type="text/css">
+    ul.categories {
+        line-height: 1.5em;
+        list-style-type: none;
+    }
+
+    ul.categories > li.even{
+        background-color: #f0f0f0;
+    }
+
+    .products {
+        margin-left: 10px;
+        padding-left: 5px;
+    }
+</style>
+</head>
+<body> 
+    The WebMatrix Loop helper adds some syntactical sugar to working with foreach loops in WebMatrix applications. To allow "tracking" a loop, call the <strong>Track</strong> method on a 
+    foreach loop.
+    e.g.
+    <pre>
+        int[] numbers = new { 1, 2, 3 };
+        @@foreach(int i in numbers.<strong>Track()</strong>) {
+            ...
+        }
+    </pre>
+    Inside the foreach loop, the following properties would become available to you:-
+    <ul>
+        <li>@@Loop.First - Determines if this is the first iteration of a loop.</li>
+        <li>@@Loop.Last - Determines if this is the last iteration of a loop.</li>
+        <li>@@Loop.Index - Gets the number of iterations the loop has completed execution.</li>
+        <li>@@Loop.Even - Determines if the loop has executed even number of times.</li>
+        <li>@@Loop.Even - Determines if the loop has executed odd number of times.</li>
+        <li>@@Loop.OuterLoop - Within nested foreach loops, allows you to access properties of the OuterLoop. e.g <code>@@Loop.OuterLoop.Even</code>
+    </ul>
+
+    <h2>Simple array example</h2>
+    <pre>
+        var weekdays = new[] {"Mon", "Tue", "Wed", "Thu", "Fri" };
+        &lt;ul&gt;
+        @@foreach (var day in weekdays.Track()){
+            if(Loop.Even){
+                &lt;li class="even-day"&gt;@@day&lt;/li&gt;    
+            }
+            else{
+                &lt;li class="odd-day"&gt;@@day&lt;/li&gt;
+            }
+        }
+        &lt;/ul&gt;
+    </pre>
+
+    @{
+        var weekdays = new[] {"Mon", "Tue", "Wed", "Thu", "Fri" };
+        <ul>
+        @foreach (var day in weekdays.Track()){
+            if(Loop.Even){
+                <li class="even-day">@day</li>    
+            }
+            else{
+                <li class="odd-day">@day</li>
+            }
+        }
+        </ul>
+    }
+    
+    
+    <br />
+    <h2>Example with nested loops and RenderPage</h2>
+    <pre>
+        var movies = new[] { 
+                new { Category = "Action & Adventure", 
+                    Top5 = new [] {"Inception", "The Dark Knight", "Star Wars: Episode V - The Empire Strikes Back", "Seven Samurai", "The Lord of the Rings: The Return of the King" } },
+                new { Category = "Anime & Animation", 
+                    Top5 = new [] { "Hababam sinifi", "Toy Story 3", "Tosun Pasa", "Mission London", "Satantango" } },
+                new { Category = "Children & Family", 
+                    Top5 = new [] {"Toy Story 3", "Happy Days", "WALL·E", "Spirited Away", "Gol Maal" } }
+        };    
+        
+        @@foreach (var item in movies.Track()) {
+            if (Loop.First) {
+                @@:&lt;table&gt;
+            }
+            @@RenderPage("_Movie.cshtml", new { Category = item.Category, Movies = item.Top5 })
+            if (Loop.Last) {
+                @@:&lt;/table&gt;
+            }
+
+        }
+    </pre>
+    @{
+        var movies = new[] { 
+                new { Category = "Action & Adventure", Top5 = new [] {"Inception", "The Dark Knight", "Star Wars: Episode V - The Empire Strikes Back", "Seven Samurai", "The Lord of the Rings: The Return of the King" } },
+                new { Category = "Anime & Animation", Top5 = new [] { "Hababam sinifi", "Toy Story 3", "Tosun Pasa", "Mission London", "Satantango" } },
+                new { Category = "Children & Family", Top5 = new [] {"Toy Story 3", "Happy Days", "WALL·E", "Spirited Away", "Gol Maal" } }
+        };    
+    }
+        
+    @foreach (var item in movies.Track()) {
+        if (Loop.First) {
+            @:<table>
+        }
+        @RenderPage("_Movie.cshtml", new { Category = item.Category, Movies = item.Top5 })
+        if (Loop.Last) {
+            @:</table>
+        }
+
+    }
+    <br />
+    @** The following commented block requires the Northwind database **@
+    @**
+
+    
+
+    <h2>Database example</h2>
+    @{
+         var db = Database.Open("Northwind");
+         var categoryResults = db.Query("Select * from Categories");
+
+         <ul class="categories">
+         @foreach (var category in categoryResults.Track()) {
+            <li class="@(Loop.Even ? "even" : "odd")">
+            <h3>@category.CategoryName</h3>
+            <div class="products">
+            @{ 
+                var products = db.Query("SELECT top 5 * FROM Products WHERE CategoryID = @0 AND Discontinued = 'False' order by UnitPrice desc", (int)category.CategoryID);
+                foreach (var product in products.Track()) {
+                    <div>@(Loop.Index + 1) @product.ProductName ($ @product.UnitPrice)</div>
+                }
+            }
+            </div>
+            </li>
+         }
+         </ul>
+
+    }
+    **@
+
+    
+</body>
+</html>

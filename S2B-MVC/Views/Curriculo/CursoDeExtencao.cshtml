@@ -1,0 +1,59 @@
+﻿@model Dominio.CursoDeExtencao
+@{
+    ViewBag.Title = "CursoDeExtencao";
+}
+
+@using(@Html.BeginForm())
+{
+    <fieldset>
+        <legend>
+            Cursos de Extencao
+        </legend>
+        
+        <ul style="list-style-type: none">
+            <li>
+                @Html.LabelFor(x=>x.Nome)
+                @Html.EditorFor(x=>x.Nome)
+            </li>
+            <li>
+                @Html.LabelFor(x=>x.NomeDaInstituição)
+                @Html.EditorFor(x=>x.NomeDaInstituição)
+            </li>
+            <li>
+                @Html.LabelFor(x=>x.Duracao)
+                @Html.EditorFor(x=>x.Duracao)
+            </li>
+            <li>
+                @Html.LabelFor(x=>x.Descricao)
+                @Html.TextAreaFor(x=>x.Descricao)
+            </li>
+            <li>
+                @Html.LabelFor(x=>x.DataInicio)
+                <input type="text" id="datepicker" />
+            </li>
+            <li>
+                @Html.LabelFor(x=>x.DataTermino)
+                <input type="text" id="datepicker1" />
+            </li>
+        </ul>
+         <button type="submit" class="btn btn-primary" >Salvar</button>
+    </fieldset>
+    
+}
+
+@section scripts{
+    
+    @Scripts.Render("~/bundles/jqueryval")
+
+    @Scripts.Render("~/bundles/jqueryui")
+
+    <script type="text/javascript">
+        $(function () {
+            $("#datepicker").datepicker();
+        });
+        $(function () {
+            $("#datepicker1").datepicker();
+        });
+
+    </script>
+}

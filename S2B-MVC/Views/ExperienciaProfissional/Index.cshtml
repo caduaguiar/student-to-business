@@ -1,0 +1,67 @@
+﻿@model Dominio.ExperienciaProfissional
+@{
+    ViewBag.Title = "Experiencias Profissionais";
+}
+
+@*<center><h2>Experiencias Profissionais</h2></center>*@
+
+@using(@Html.BeginForm())
+{
+    //paramtro true significa que o valitation so ira mostrar as mesagens de erro do modelo  , se nao mostra mensagem de erro das propriedades 
+    // do modelo tambem   
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>
+            Experiencias Profissionais
+        </legend>
+        <ul style="list-style-type: none" >
+            <li class="editor-label" >
+                @Html.LabelFor(x=>x.Cargo)
+                @Html.EditorFor(x=>x.Cargo)
+                
+                @*<input type="text" placeholder="Informe o Cargo"/>*@
+            </li>
+            <li >
+                @Html.LabelFor(x=>x.Empresa)
+                @Html.EditorFor(x=>x.Empresa)
+                @*<input type="text" placeholder="Informe o Cargo"/>*@
+            </li>
+            <li>
+                @Html.LabelFor(x=>x.DataInicio)
+                <input type="text" id="datepicker" />
+            </li>
+            <li>
+                @Html.LabelFor(x=>x.DataTermino)
+                <input type="text" id="datepicker1" />
+            </li>
+            <li >
+                @Html.LabelFor(x=>x.Descricao)
+                @Html.TextAreaFor(x=>x.Descricao)
+                @*<input type="text" placeholder="Informe o Cargo"/>*@
+            </li>
+
+        </ul>
+        <p>
+            <input type="button" value="Enviar"/>
+        </p>
+    </fieldset>
+    
+}
+
+@section scripts{
+    
+    @Scripts.Render("~/bundles/jqueryval")
+
+    @Scripts.Render("~/bundles/jqueryui")
+
+  @*  <script type="text/javascript">
+        $(function () {
+            $("#datepicker").datepicker();
+        });
+        $(function () {
+            $("#datepicker1").datepicker();
+        });
+
+    </script>*@
+}

@@ -1,0 +1,56 @@
+﻿@model Dominio.Instituicao
+@{
+    ViewBag.Title = "Instituições";
+}
+
+@using(@Html.BeginForm())
+{
+    <fieldset>
+        <legend>Instituições</legend>
+        
+        <ul style="list-style-type: none">
+           
+            <li>
+                @Html.LabelFor(x=>x.Nome)
+                @Html.EditorFor(x=>x.Nome)
+            </li>
+            <li>
+                @Html.LabelFor(x=>x.Curso)
+                @Html.EditorFor(x=>x.Curso)
+            </li>
+            <li>
+                @Html.LabelFor(x=>x.NivelDeGraduacao)
+                @Html.EditorFor(x=>x.NivelDeGraduacao)
+            </li>
+             <li>
+                @Html.LabelFor(x=>x.DataInicio)
+                <input type="text" id="datepicker" />
+            </li>
+            <li>
+                @Html.LabelFor(x=>x.DataTermino)
+                <input type="text" id="datepicker1" />
+            </li>
+            <li>
+                @Html.LabelFor(x=>x.Status)
+                @Html.EditorFor(x=>x.Status)
+            </li>
+             <button type="submit" class="btn btn-primary" >Salvar</button>
+        </ul>
+    </fieldset>
+}
+@section scripts{
+    
+    @Scripts.Render("~/bundles/jqueryval")
+
+    @Scripts.Render("~/bundles/jqueryui")
+
+    <script type="text/javascript">
+        $(function () {
+            $("#datepicker").datepicker();
+        });
+        $(function () {
+            $("#datepicker1").datepicker();
+        });
+
+    </script>
+}

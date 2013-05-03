@@ -1,0 +1,23 @@
+﻿@{
+    string category = Page.Category as string;
+    IEnumerable<string> movies = (IEnumerable<string>) Page.Movies;
+}
+
+@foreach(var movie in movies.Track()){
+    if(Loop.First){
+        @:<tbody>
+        <tr>
+            <th scope="rowgroup" cospan="2">Category @(Loop.OuterLoop.Index + 1) @category</th>
+        </tr>
+    }
+    if(Loop.OuterLoop.Index == 1 && Loop.Index == 2){
+        break;
+    }
+    <tr>
+        <td>@(Loop.Index + 1)</td>
+        <td style="color: @(Loop.Even ? "red" : "green")">@movie</td>
+    </tr>
+    if(Loop.Last){
+        @:</tbody>
+    }
+}

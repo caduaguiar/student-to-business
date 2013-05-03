@@ -1,0 +1,53 @@
+﻿@model Dominio.Curriculo
+@{
+    ViewBag.Title = "Index";
+}
+<center><h2>Cadastre seu curriculo aqui!</h2></center>
+<div class="tabbable">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#candidato" data-toggle="tab">Curriculo</a></li>
+    </ul>
+</div>
+<div class="tab-content">
+    <div class="tab-pane active" id="candidato">
+        @using (Html.BeginForm(new { @class = "row" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <fieldset>
+                <legend>Dados do Candidato</legend>
+                @Html.LabelFor(x => x.Candidato.Nome)
+                @Html.TextBoxFor(x => x.Candidato.Nome, new { @class = "span5" })
+            </fieldset>
+            <fieldset>
+                <legend>Experiências Profissionais</legend>
+            </fieldset>
+            <fieldset>
+                <legend>Instituições</legend>
+            </fieldset>
+            <fieldset>
+                <legend>Cursos de Extensão</legend>
+            </fieldset>
+            <fieldset>
+                <legend>Idiomas</legend>
+            </fieldset>
+        }
+    </div>
+</div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+
+        $('#tab2').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        });
+
+        $('#tab2 a[href="#tab2"]').tab('show');
+
+    </script>
+}
+

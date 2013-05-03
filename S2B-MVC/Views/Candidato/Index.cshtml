@@ -1,0 +1,11 @@
+﻿@model IEnumerable<Dominio.Candidato>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@foreach(var c in Model)
+{
+    <span>@c.Nome</span>
+}

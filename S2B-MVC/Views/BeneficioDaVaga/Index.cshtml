@@ -1,0 +1,25 @@
+﻿@model Dominio.BeneficioDaVaga
+@{
+    ViewBag.Title = "Beneficio da Vaga";
+}
+
+@using(@Html.BeginForm())
+{
+    <fieldset>
+        <legend>
+            Beneficios da Vaga
+        </legend>
+        
+        <ul style="list-style-type: none">
+            <li>
+                @Html.LabelFor(x=>x.Descricao)
+                @Html.TextAreaFor(x=>x.Descricao)
+            </li>
+            @*<li>
+                @Html.LabelFor(x=>x.Vaga)
+                @Html.EditorFor(x=>x.Vaga)
+            </li>*@
+        </ul>
+        <input type="submit" value="Enviar"/>
+    </fieldset>
+}
